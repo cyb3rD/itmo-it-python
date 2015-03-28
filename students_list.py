@@ -28,38 +28,49 @@ numOfStuds = 0
 for stud in studList:
     if search in stud:
         numOfStuds += 1
-print "\n" + str(numOfStuds) + u" раз(а) найден искомый символ: " + search
+if numOfStuds:
+    print "\n" + str(numOfStuds) + u" раз(а) найден искомый символ: " + search
+else:
+    print u"\nИскомый символ: " + search + u" не найден!"
 # ========================
 # Задание 5
 # Найти группы студентов с одинаковыми именами и создать списки этих групп
 # ========================
 
 studList.sort()            # сортируем  исходный список
-# список, где каждый элемент список вида [имя, фамилия]
-newList = [stud.split() for stud in studList ] 
-# список имен студентов
-nameList = [newList[i][0] for i in range(len(newList))]
-tmpList = []                # список для хранения студентов с одинаковыми именами
-equalList = []              # список для хранения групп студентов с одинаковыми именами
-nameListLen = len(nameList) # кол-во элементов в списке имен
-n = 0                       # начальный индекс для перебора элементов
-counter = 0
 
+# список (элемент список вида [имя, фамилия])
+newList = [stud.split() for stud in studList ] 
+# список ВСЕХ имен студентов
+nameList = [newList[i][0] for i in range(len(newList))]
+# множество - список имен (без повторений)
+nameSet = set(nameList)
+# словарь {имя_студента: полные ФИО для одинаковых имен}
+studDict = dict.fromkeys(nameSet) 
+# кол-во элементов в списке имен
+nameListLen = len(nameList) 
+# начальный индекс для перебора элементов
+n = 0                      
+
+# цикл по кол-ву имен в списке имен
 while n < nameListLen:
     # подсчет кол-ва имен
     counter = nameList.count(nameList[n])
     # если больше 1
     if counter > 1:
-        # индекс первого вхождения имени (нач.позиция)
+        # находим индекс первого вхождения имени (нач.позиция) в списке имен
         foundIndex = nameList.index(nameList[n]) 
-        # во временный список пишем студентов с одинаковыми фамилиями
-        tmpList.append(studList[foundIndex:foundIndex+counter])
-        # в итоговый список в качестве элемента дописываем
-        # список студентов с одинаковыми фамилиями
-        equalList.append(tmpList)
-    # увеличиваем индекс и обнуляем временный список
+        # в словарь для ключа имя_студента пишем список с полными ФИО 
+        # из исходного списка
+        studDict[nameList[n]] = studList[foundIndex:foundIndex+counter]
+    # увеличиваем индекс на кол-во найденных элементов
     n += counter
-    tmpList = []
-        
-print "\n" + u"Списки студентов с одинаковыми именами:"
-print equalList
+
+print u"\nСловарь со списками студентов с одинаковыми именами:"
+# вывод словаря без ключей с пустыми значениями (None)
+print {s:studDict[s] for s in studDict if studDict[s] != None}   
+
+print u"\nСловарь со списками студентов с в виде множества:"
+# вывод словаря без ключей с пустыми значениями (None)
+print {s:set(studDict[s]) for s in studDict if studDict[s] != None}  
+ 
