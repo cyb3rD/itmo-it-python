@@ -36,9 +36,7 @@ else:
 # Задание 5
 # Найти группы студентов с одинаковыми именами и создать списки этих групп
 # ========================
-
 studList.sort()            # сортируем  исходный список
-
 # список (элемент список вида [имя, фамилия])
 newList = [stud.split() for stud in studList ] 
 # список ВСЕХ имен студентов
@@ -47,30 +45,38 @@ nameList = [newList[i][0] for i in range(len(newList))]
 nameSet = set(nameList)
 # словарь {имя_студента: полные ФИО для одинаковых имен}
 studDict = dict.fromkeys(nameSet) 
-# кол-во элементов в списке имен
-nameListLen = len(nameList) 
-# начальный индекс для перебора элементов
-n = 0                      
 
-# цикл по кол-ву имен в списке имен
-while n < nameListLen:
-    # подсчет кол-ва имен
-    counter = nameList.count(nameList[n])
-    # если больше 1
-    if counter > 1:
-        # находим индекс первого вхождения имени (нач.позиция) в списке имен
-        foundIndex = nameList.index(nameList[n]) 
-        # в словарь для ключа имя_студента пишем список с полными ФИО 
-        # из исходного списка
-        studDict[nameList[n]] = studList[foundIndex:foundIndex+counter]
-    # увеличиваем индекс на кол-во найденных элементов
-    n += counter
+# ===================================
+# Функция для вывода списка студентов:
+# ==================================
+def strDoubleStudents (listLen, nameList, isSet=True):
+    # начальный индекс для перебора элементов
+    n = 0                      
+    # цикл по кол-ву имен в списке имен
+    while n < listLen:
+        # подсчет кол-ва имен
+        counter = nameList.count(nameList[n])
+        # если больше 1
+        if counter > 1:
+            # находим индекс первого вхождения имени (нач.позиция) в списке имен
+            foundIndex = nameList.index(nameList[n]) 
+            # в словарь для ключа имя_студента пишем список с полными ФИО 
+            # из исходного списка
+            studDict[nameList[n]] = studList[foundIndex:foundIndex+counter]
+        # увеличиваем индекс на кол-во найденных элементов
+        n += counter
+    if not isSet:   
+        print u"\nСловарь со списками студентов с одинаковыми именами:"
+        # вывод словаря без ключей с пустыми значениями (None)
+        return {s:studDict[s] for s in studDict if studDict[s] != None}   
+    else:
+        print u"\nСловарь со списками студентов с в виде множества:"
+        # вывод словаря без ключей с значениями (None) и значение в виде множества
+        return {s:set(studDict[s]) for s in studDict if studDict[s] != None}  
 
-print u"\nСловарь со списками студентов с одинаковыми именами:"
-# вывод словаря без ключей с пустыми значениями (None)
-print {s:studDict[s] for s in studDict if studDict[s] != None}   
-
-print u"\nСловарь со списками студентов с в виде множества:"
-# вывод словаря без ключей с пустыми значениями (None)
-print {s:set(studDict[s]) for s in studDict if studDict[s] != None}  
- 
+#==============================================
+# Вывод списка студентов с одинаковыми именами
+# в зависимости от значения параметра isSet:
+# либо в виде списка, либо в виде множетсва
+#==============================================
+print strDoubleStudents(len(nameList), nameList, False)
