@@ -79,4 +79,4 @@ def strDoubleStudents (listLen, nameList, isSet=True):
 # в зависимости от значения параметра isSet:
 # либо в виде списка, либо в виде множетсва
 #==============================================
-print strDoubleStudents(len(nameList), nameList, False)
+print strDoubleStudents(len(nameList), nameList)
