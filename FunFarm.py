@@ -5,16 +5,12 @@ class Animal(object):
 	id = 0
 	# Словарь для хранения продукции в виде {продукт: кол-во}
 	products = {}
+	# СКЛАД : подсчет кол-ва подуктов
+	warehouse = {}
 	# Цена животного
 	priceOfAnimal = 0
-	
-	def __init__(self):
-		pass
-	# Сколько съедено
-	def food(self):
-		pass
-	# Сколько произведено продукта
-	def product(self):
+	# Метод для подсчета кол-ва каждого вида продукта
+	def countProducts(self):
 		pass
 	# Месяц спустя
 	def monthLater(self):
@@ -87,12 +83,17 @@ class FunFarm(object):
 	    for typeOfAnimal in myFarm.animals.keys():
 		for obj in myFarm.animals[typeOfAnimal]:
 			obj.monthLater()
-			print obj.products
+			#print obj.products
 
 	def totalInfo(self):
+		print u"==========================================="
 		print u"Текущий день: " + str(self.currentDay)
+		print u"==========================================="
 		print u"Cводка: "
 		# Кол-во животных | Вид продукции / кол-во | Стоимость животного
+		for typeOfAnimal in myFarm.animals.keys():
+		    for obj in myFarm.animals[typeOfAnimal]:
+		    	print u"Животное: " + typeOfAnimal + u" | Продукты: " + str(obj.products)
 
 # Инициализация фермы
 myFarm = FunFarm()
@@ -102,8 +103,5 @@ myFarm.totalInfo()
 myFarm.monthLater()
 # вывод информации о состоянии дел
 myFarm.totalInfo()
-
-
-print myFarm.animals
 
 
