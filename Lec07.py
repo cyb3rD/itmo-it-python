@@ -14,6 +14,7 @@ studList = []
 def calculateTime(func):
 	def printTime(*args, **kwargs):
 	    print datetime.now()
+	    # в декорируемую функцию передаются аргументы
 	    func(*args, **kwargs)
 	    print datetime.now()
 

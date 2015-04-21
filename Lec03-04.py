@@ -11,3 +11,4 @@ b.arg = 2
 
 print (a.arg)
 print a.hello(a.arg)
+
