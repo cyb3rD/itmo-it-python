@@ -32,6 +32,8 @@ def getDisks ():
 
 disks = getDisks()[1] #список дисков
 
+print disks
+
 start_path = 'd:'
 extDict = {} # extension: num of files
 
@@ -39,7 +41,10 @@ def getDirs (basedir="C:\\"):
     '''
     Получение списка каталогов для диска
     '''
-    #список файлов в подкаталоге basedir
+    # список файлов в подкаталоге basedir
+    # ToDo:
+    # обработать исключение на windowsError 
+    
     subnames = os.listdir(basedir)
     #список каталогов
     dirnames = []
@@ -88,6 +93,8 @@ print "словарь с данными по расширениям: "
 # sorted(extDict.items(), key=lambda (k, v): v, reverse=True)
 print extDict['exe']
 '''
-
+'''
 for d in disks:
     print getDirs(d)
+'''
+print getDirs('c:\\')
